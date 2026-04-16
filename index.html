@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gilbert Garcia | Full Stack Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --bg-dark: #0f0f1e;
+            --bg-card: #16213e;
+            --text-primary: #dfe6e9;
+            --text-secondary: #b2bec3;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(108, 92, 231, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(253, 121, 168, 0.1) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, -20px); }
+        }
+
+        /* Divider GIF effect */
+        .divider {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+            margin: 3rem 0;
+            opacity: 0.5;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header/Hero */
+        header {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+            margin: 2rem 0;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            object-fit: cover;
+            box-shadow: 0 0 30px rgba(108, 92, 231, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(108, 92, 231, 0.8);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+            border-color: var(--primary);
+        }
+
+        /* Sections */
+        section {
+            margin: 4rem 0;
+            animation: fadeInUp 1s ease;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        h2 i {
+            color: var(--accent);
+        }
+
+        /* About Card */
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .yaml-content {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .yaml-key {
+            color: var(--accent);
+        }
+
+        .yaml-value {
+            color: var(--text-primary);
+        }
+
+        .yaml-comment {
+            color: #636e72;
+            font-style: italic;
+        }
+
+        .highlights {
+            margin-top: 2rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: start;
+            gap: 0.8rem;
+            padding: 1rem;
+            background: rgba(108, 92, 231, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .highlight-item:hover {
+            transform: translateX(5px);
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .highlight-item i {
+            color: var(--accent);
+            margin-top: 0.2rem;
+        }
+
+        /* Tech Stack */
+        .tech-category {
+            margin-bottom: 2rem;
+        }
+
+        .tech-title {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-badge i {
+            font-size: 1.1rem;
+        }
+
+        .tech-badge.main {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(253, 121, 168, 0.2));
+            border-color: var(--primary);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Working On Section */
+        .working-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .work-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .work-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .work-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .work-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .work-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .heart {
+            color: var(--accent);
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .tagline { font-size: 1rem; }
+            .container { padding: 0 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .yaml-content { font-size: 0.85rem; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="divider"></div>
+            
+            <h1>Hi 👋, I'm Gilbert Garcia</h1>
+            
+            <div class="profile-img-container">
+                <img src="https://github.com/user-attachments/assets/8a907397-f552-46b2-a040-147615b34a8d" 
+                     alt="Gilbert Garcia" 
+                     class="profile-img">
+            </div>
+            
+            <p class="tagline">💻 "Con disciplina y paciencia, cualquiera puede programar"</p>
+            
+            <div class="social-links">
+                <a href="https://linkedin.com/in/gilbert-garcia" target="_blank" class="social-btn">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="mailto:gilbertgarcia@example.com" class="social-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Gmail</span>
+                </a>
+                <a href="https://github.com/GitGilbert17" target="_blank" class="social-btn">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+            
+            <div class="divider"></div>
+        </header>
+
+        <!-- About Section -->
+        <section class="scroll-reveal">
+            <h2><i class="fas fa-user-circle"></i> About Me</h2>
+            <div class="about-card">
+                <div class="yaml-content">
+                    <div><span class="yaml-key">name:</span> <span class="yaml-value">Gilbert Garcia</span></div>
+                    <div><span class="yaml-key">focus:</span> <span class="yaml-value">Full Stack Development</span></div>
+                    <div><span class="yaml-key">location:</span> <span class="yaml-value">Santo Domingo, Dominican Republic</span></div>
+                    <div><span class="yaml-key">currently_learning:</span> <span class="yaml-value">Advanced JavaScript & Python ecosystems</span></div>
+                    <div><span class="yaml-key">languages:</span></div>
+                    <div style="margin-left: 20px;"><span class="yaml-value">- Spanish (Native)</span></div>
+                    <div style="margin-left: 20px;"><span class="yaml-value">- English (B2-C1)</span></div>
+                    <div><span class="yaml-key">philosophy:</span> <span class="yaml-value">"The best way to learn is by breaking things (and then fixing them)"</span></div>
+                </div>
+                
+                <div class="highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-rocket"></i>
+                        <div>Currently working on <strong>full-stack web applications</strong></div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-seedling"></i>
+                        <div>Deep-diving into <strong>modern JavaScript frameworks</strong> and <strong>Python backend development</strong></div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>Passionate about <strong>clean code</strong> and <strong>scalable architectures</strong></div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-bug"></i>
+                        <div><span class="yaml-comment">⚡ Fun fact: I debug with print statements and I'm not ashamed!</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Tech Stack -->
+        <section class="scroll-reveal">
+            <h2><i class="fas fa-tools"></i> Tech Stack</h2>
+            
+            <div class="tech-category">
+                <div class="tech-title">⭐ Main Specializations</div>
+                <div class="tech-grid">
+                    <div class="tech-badge main">
+                        <i class="fab fa-python" style="color: #3776AB;"></i>
+                        Python
+                    </div>
+                    <div class="tech-badge main">
+                        <i class="fab fa-js" style="color: #F7DF1E;"></i>
+                        JavaScript
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <div class="tech-title">💻 Additional Languages</div>
+                <div class="tech-grid">
+                    <div class="tech-badge">
+                        <i class="fas fa-code" style="color: #239120;"></i>
+                        C#
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fas fa-microchip" style="color: #00599C;"></i>
+                        C++
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fab fa-php" style="color: #777BB4;"></i>
+                        PHP
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <div class="tech-title">🎨 Frontend Development</div>
+                <div class="tech-grid">
+                    <div class="tech-badge">
+                        <i class="fab fa-html5" style="color: #E34F26;"></i>
+                        HTML5
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fab fa-css3-alt" style="color: #1572B6;"></i>
+                        CSS3
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fab fa-react" style="color: #61DAFB;"></i>
+                        React
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <div class="tech-title">⚙️ Backend Development</div>
+                <div class="tech-grid">
+                    <div class="tech-badge">
+                        <i class="fab fa-python" style="color: #3776AB;"></i>
+                        Python
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fas fa-code" style="color: #239120;"></i>
+                        C#
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fab fa-php" style="color: #777BB4;"></i>
+                        PHP
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-category">
+                <div class="tech-title">🗄️ Databases</div>
+                <div class="tech-grid">
+                    <div class="tech-badge">
+                        <i class="fas fa-database" style="color: #4479A1;"></i>
+                        MySQL
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fas fa-server" style="color: #CC2927;"></i>
+                        SQL Server
+                    </div>
+                    <div class="tech-badge">
+                        <i class="fas fa-database" style="color: #F80000;"></i>
+                        Oracle
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- GitHub Stats -->
+        <section class="scroll-reveal">
+            <h2><i class="fas fa-chart-bar"></i> GitHub Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <img src="https://github-readme-stats.vercel.app/api?username=GitGilbert17&show_icons=true&theme=radical" 
+                         alt="GitHub Stats">
+                </div>
+                <div class="stat-card">
+                    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=GitGilbert17&layout=compact&theme=radical" 
+                         alt="Top Languages">
+                </div>
+            </div>
+            <div class="stat-card" style="max-width: 100%;">
+                <img src="https://github-readme-streak-stats.herokuapp.com/?user=GitGilbert17&theme=radical" 
+                     alt="GitHub Streak" style="width: 100%;">
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <img src="https://github-profile-trophy.vercel.app/?username=GitGilbert17&theme=radical&no-frame=false&no-bg=false&margin-w=4&row=1" 
+                     alt="GitHub Trophies" style="max-width: 100%;">
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Working On -->
+        <section class="scroll-reveal">
+            <h2><i class="fas fa-briefcase"></i> What I'm Working On</h2>
+            <div class="working-grid">
+                <div class="work-card">
+                    <div class="work-icon">🚀</div>
+                    <h3>Scalable Web Apps</h3>
+                    <p>Building applications with React and Python</p>
+                </div>
+                <div class="work-card">
+                    <div class="work-icon">🔧</div>
+                    <h3>Open Source</h3>
+                    <p>Contributing to community projects</p>
+                </div>
+                <div class="work-card">
+                    <div class="work-icon">📚</div>
+                    <h3>Technical Writing</h3>
+                    <p>Articles and documentation</p>
+                </div>
+                <div class="work-card">
+                    <div class="work-icon">🎓</div>
+                    <h3>Continuous Learning</h3>
+                    <p>Improving skills daily</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Contact -->
+        <section class="scroll-reveal" style="text-align: center;">
+            <h2><i class="fas fa-envelope"></i> Let's Connect!</h2>
+            <div class="social-links" style="margin-top: 2rem;">
+                <a href="https://linkedin.com/in/gilbert-garcia" target="_blank" class="social-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="mailto:gilbertgarcia@example.com" class="social-btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Me</span>
+                </a>
+            </div>
+            
+            <div style="margin-top: 2rem; opacity: 0.7;">
+                <img src="https://komarev.com/ghpvc/?username=GitGilbert17&label=Profile%20views&color=6c5ce7&style=flat" alt="Profile views">
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="divider"></div>
+            <p class="footer-text">
+                <i class="fas fa-star" style="color: #fdcb6e;"></i> 
+                From <a href="https://github.com/GitGilbert17" style="color: var(--primary); text-decoration: none;">Gilbert Garcia</a> 
+                with <span class="heart">❤️</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+        // Interactive Tech Badges
+        document.querySelectorAll('.tech-badge').forEach(badge => {
+            badge.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Parallax effect for background
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            document.querySelector('.bg-animation').style.transform = 
+                `translate(${x * 20}px, ${y * 20}px)`;
+        });
+    </script>
+</body>
+</html>
